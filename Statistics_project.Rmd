@@ -22,12 +22,41 @@ baby_weight <- read_delim("https://www.openintro.org/data/tab-delimited/babies.t
 
 baby_weight
 ```
-Some NA values have been observed. They are removed.
+Some NA values have been observed.
 
 ```{r}
+# NA values will are now removed.
 baby_weight <- baby_weight %>%
-  drop_na()
-
+  drop_na() %>%
+  mutate(smoke = as.character(smoke))
 baby_weight
+```
+
+# Initial exploration
+```{r}
+baby_weight %>%
+  ggplot(aes(y = bwt,
+             x = gestation, 
+             color = smoke)) +
+  geom_point() +
+  labs(title = "Baby weight against Gestation days",
+       x = "Gestattion days",
+       y = "Baby weight",
+       color = "Smoker") +
+  theme_classic()
+```
+
+
+# Linear model
+```{r}
+ baby_weight %>%
+  lm(bwt~gestation+smoke, data=.) %>%
+  summary()
+```
+
+
+# Calculate confidence interval
+```{r}
+confint(baby_weight %>%lm(bwt~gestation+smoke, data=.), level=0.95)
 ```
 
