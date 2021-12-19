@@ -1,0 +1,33 @@
+---
+title: "Statistics_project"
+author: "Michael Mbajwa"
+date: "12/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load required libraries
+```{r}
+library(tidyverse)
+library(purrr)
+library(broom)
+```
+
+# Load the dataset
+```{r}
+baby_weight <- read_delim("https://www.openintro.org/data/tab-delimited/babies.txt", delim = "\t")
+
+baby_weight
+```
+Some NA values have been observed. They are removed.
+
+```{r}
+baby_weight <- baby_weight %>%
+  drop_na()
+
+baby_weight
+```
+
